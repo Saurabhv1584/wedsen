@@ -30,8 +30,18 @@ body {
 .logo {
     font-size: 20px;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
+.logo_image{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px; 
+}
 .search-bar {
     display: flex;
     align-items: center;
@@ -81,21 +91,6 @@ a {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-}
-
-.buttons button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    background: #6a1b9a;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-}
-
-.buttons button:hover {
-    background: #4a148c;
-    transform: scale(1.05);
 }
 
 .grid {

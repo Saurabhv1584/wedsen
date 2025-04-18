@@ -1,7 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
+import weddingEssentialsItems from "../../data/weddingEssentialsItems.json"; // import the JSON file
+import { Link } from "react-router-dom";
 
 const WeddingEssential = () => {
+  const [products, setProducts] = useState(weddingEssentialsItems);
+  const [isPriceDescending, setIsPriceDescending] = useState(true);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  const handleFilterClick = () => {
+    console.log("Filter clicked");
+    if (!isFiltered) {
+      // Filter items based on title (can be adjusted to other criteria as well)
+      const filteredProducts = weddingEssentialsItems.filter((item) =>
+        item.title.toLowerCase().includes("jewellery")
+      );
+      setProducts(filteredProducts);
+    } else {
+      setProducts(weddingEssentialsItems); // Reset to original list
+    }
+    setIsFiltered(!isFiltered); // Toggle filter state
+  };
+
+  const handleSortByPriceClick = () => {
+    console.log("Sort By Price clicked");
+    const sortedProducts = [...products].sort((a, b) =>
+      isPriceDescending ? b.price - a.price : a.price - b.price
+    );
+    setProducts(sortedProducts);
+    setIsPriceDescending(!isPriceDescending); // Toggle for next click
+  };
+
+  const handleFavClick = (item) => {
+    console.log("Added to Wishlist", item);
+  };
+
+  const updateQuantity = (e, index, delta) => {
+    e.preventDefault();
+    setProducts((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              quantity: Math.max(0, item.quantity + delta),
+            }
+          : item
+      )
+    );
+  };
+
   return (
     <>
       <header>
@@ -9,25 +56,17 @@ const WeddingEssential = () => {
           <span>CONTACT - 79666 8310</span>
           <span>MAIL - care@anekcreation.com</span>
         </div>
-        <a
-          href="https://web.whatsapp.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="whatsapp-float"
-        >
-          <img
-            src="https://m.media-amazon.com/images/G/31/CONSTELLATION/WhatsAppIcon2x.png"
-            alt="WhatsApp"
-            width="60"
-            height="60"
-          />
-        </a>
-
         <div className="navbar">
-          <div className="logo">
-            <img src="/anek-logo.ico" alt="logo1" height="20px" width="20px" />{" "}
+          <Link to="/" className="logo">
+            <img
+              className="logo_image"
+              src="/public/images/anek logo.jpg"
+              alt="Anek Creations Logo"
+              height="20px"
+              width="20px"
+            />
             Anek Creations
-          </div>
+          </Link>
           <div className="search-bar">
             <input type="text" placeholder="Search Products" />
             <button>🔍</button>
@@ -43,57 +82,44 @@ const WeddingEssential = () => {
       <div className="container">
         <div className="header">Wedding Essentials</div>
         <div className="buttons">
-          <button>Filter</button>
-          <button>Sort By</button>
+          <button className="sort_by_btn" onClick={handleFilterClick}>
+            Filter by name
+          </button>
+          <button className="sort_by_btn" onClick={handleSortByPriceClick}>
+            Sort By Price
+          </button>
         </div>
+
         <div className="grid">
-          <div className="card">
-            <a href="#">
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/Ubxt1BdUOY9P42v._SL360_QL95_FMwebp_.jpg"
-                alt="Haldi Jewellery"
-              />
-              <div className="card-content">
-                <h2>Haldi Jewellery</h2>
-                <p className="price">
-                  ₹799 <span className="old-price">₹1200</span>
-                </p>
-                <p className="discount">33% Off</p>
+          {products.map((item, index) => (
+            <div className="card" key={index}>
+              <div className="fav-icon-wrapper">
+                <button
+                  className="fav-button"
+                  onClick={() => handleFavClick(item)}
+                  title="Add to Wishlist"
+                >
+                  ❤️
+                </button>
               </div>
-            </a>
-          </div>
+              <a href="#">
+                <img src={item.image} alt={item.title} />
+                <div className="card-content">
+                  <h2>{item.title}</h2>
+                  <p className="price">
+                    ₹{item.price} <span className="old-price">₹{item.oldPrice}</span>
+                  </p>
+                  <p className="discount">{item.discount}</p>
 
-          <div className="card">
-            <a href="#">
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/3bxt1Rx-q9DQXMd._SL360_QL95_FMwebp_.jpg"
-                alt="Lingar Earrings"
-              />
-              <div className="card-content">
-                <h2>Lingar Earrings</h2>
-                <p className="price">
-                  ₹249 <span className="old-price">₹400</span>
-                </p>
-                <p className="discount">37% Off</p>
-              </div>
-            </a>
-          </div>
-
-          <div className="card">
-            <a href="#">
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/Tbxt1hqR3-nlwAd._SL360_QL95_FMwebp_.jpg"
-                alt="Pink Fabric Floral Haldi Jewellery Set"
-              />
-              <div className="card-content">
-                <h2>Pink Fabric Floral Haldi Jewellery Set</h2>
-                <p className="price">
-                  ₹699 <span className="old-price">₹1000</span>
-                </p>
-                <p className="discount">30% Off</p>
-              </div>
-            </a>
-          </div>
+                  <div className="quantity-controls">
+                    <button onClick={(e) => updateQuantity(e, index, -1)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={(e) => updateQuantity(e, index, 1)}>+</button>
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
         </div>
       </div>
 

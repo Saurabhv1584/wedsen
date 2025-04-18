@@ -23,8 +23,7 @@ const Crochet = () => {
 
         <div class="navbar">
           <div class="logo">
-            {" "}
-            <img src="/anek-logo.ico" alt="logo1" height="20px" width="20px" />
+            <img class='logo_image' src="/public/images/anek logo.jpg"  alt="logo1" height="20px" width="20px" />
             Anek Creations
           </div>
           <div class="search-bar">

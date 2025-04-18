@@ -30,16 +30,74 @@ body {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+
 .logo {
-    font-size: 24px;
-    font-weight: bold;
     color: #6a1b9a; /* A rich purple color */
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.logo_image{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px; 
 }
 
 .search-bar {
     display: flex;
     align-items: center;
 }
+
+.fav-icon-wrapper {
+    z-index: 2;
+  }
+  
+  .fav-button {
+    position: absolute;
+    top: 10px;
+    width: 50px;
+    right: 3px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  .quantity-controls button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    color: black;
+  }
+  
+  .quantity-controls span {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+  }
+  
 
 .search-bar input {
     padding: 8px;
@@ -94,7 +152,7 @@ a {
     margin-bottom: 20px;
 }
 
-.buttons button {
+/* .buttons button {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -107,7 +165,7 @@ a {
 .buttons button:hover {
     background: linear-gradient(90deg, #4a148c, #f9c9e2);
     transform: scale(1.05);
-}
+} */
 
 .grid {
     display: grid;
@@ -138,7 +196,7 @@ a {
 
 .card-content {
     padding: 10px;
-}
+  }
 
 .card h2 {
     font-size: 16px;
