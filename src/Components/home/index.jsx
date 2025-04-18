@@ -5,18 +5,18 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <>
-      <header>
+      <header >
         <div class="contact-info">
           <span>CONTACT - 79666 8310</span>
           <span>MAIL - care@anekcreation.com</span>
         </div>
         <div class="navbar">
-          <a href="home.html">
+            <Link to="/">
             <div class="logo">Anek Creations</div>
-          </a>
+            </Link>
           <div class="search-bar">
             <input type="text" placeholder="Search Products" />
-            <button>🔍</button>
+            <span class='search_icon'>🔍</span>
           </div>
           <div class="icons">
             <span>❤ Wishlist</span>
@@ -79,13 +79,12 @@ const Home = () => {
                 />
                 <div class="img-content">
                   <h3>₹199</h3>
-                  <a
-                    href="https://en.wikipedia.org/wiki/Fruit"
+                  <Link
+                    to="https://en.wikipedia.org/wiki/Fruit"
                     class="btn btn-primary"
-                    target="_blank"
                   >
                     Shop Now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -97,13 +96,12 @@ const Home = () => {
                 />
                 <div class="img-content">
                   <h3>₹999</h3>
-                  <a
-                    href="https://en.wikipedia.org/wiki/Vegetable"
+                  <Link
+                    to="https://en.wikipedia.org/wiki/Vegetable"
                     class="btn btn-primary"
-                    target="_blank"
                   >
                     Shop Now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -115,13 +113,12 @@ const Home = () => {
                 />
                 <div class="img-content">
                   <h3>Customize Item</h3>
-                  <a
-                    href="https://en.wikipedia.org/wiki/Grain"
+                  <Link
+                    to="https://en.wikipedia.org/wiki/Grain"
                     class="btn btn-primary"
-                    target="_blank"
                   >
                     Customise Here
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -134,30 +131,30 @@ const Home = () => {
           <h2>Some of Our Best Sellers</h2>
           <div class="seller-slider">
             <div class="seller-item">
-              <a href="">
+              <Link to="">
                 <img
                   src="https://m.media-amazon.com/images/X/bxt1/M/obxt1BWQCV4ul0a._SL360_QL95_FMwebp_.jpg"
                   alt="Earrings"
                 />
-              </a>
+              </Link>
               <span>Crochet</span>
             </div>
             <div class="seller-item">
-              <a href="">
+              <Link to="">
                 <img
                   src="https://m.media-amazon.com/images/X/bxt1/M/Rbxt1BqRLNFMFZ7._SL360_QL95_FMwebp_.jpg"
                   alt="Resin Frame"
                 />
-              </a>
+              </Link>
               <span>Resin Frame</span>
             </div>
             <div class="seller-item">
-              <a href="">
+              <Link to="">
                 <img
                   src="https://m.media-amazon.com/images/X/bxt1/M/Tbxt1hqR3-nlwAd._SL360_QL95_FMwebp_.jpg"
                   alt="Dream Catcher"
                 />
-              </a>
+              </Link>
               <span>Dream Catcher</span>
             </div>
           </div>
