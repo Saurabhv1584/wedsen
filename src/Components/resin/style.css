@@ -67,8 +67,9 @@ body {
     position: absolute;
     top: 10px;
     width: 50px;
-    right: 3px;
-    background: none;
+    right: 0;
+    padding: 0 0 0 10px;  
+        background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;

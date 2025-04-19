@@ -1,183 +1,121 @@
-import React from "react";
+import React, { useState } from "react";
+import "./style.css";
+import crochetItems from "../../data/crochetItems.json";
+import { Link } from "react-router-dom";
 
 const Crochet = () => {
+  const [products, setProducts] = useState(crochetItems);
+  const [isPriceDescending, setIsPriceDescending] = useState(true);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  const updateQuantity = (e, index, delta) => {
+    e.preventDefault();
+    setProducts((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? { ...item, quantity: Math.max(0, item.quantity + delta) }
+          : item
+      )
+    );
+  };
+
+  const handleFavClick = (item) => {
+    console.log("Favorited:", item.title);
+  };
+
+  const handleFilterClick = () => {
+    if (!isFiltered) {
+      const filtered = crochetItems.filter((item) =>
+        item.title.toLowerCase().includes("crochet")
+      );
+      setProducts(filtered);
+    } else {
+      setProducts(crochetItems);
+    }
+    setIsFiltered(!isFiltered);
+  };
+
+  const handleSortByPriceClick = () => {
+    const sorted = [...products].sort((a, b) =>
+      isPriceDescending ? b.price - a.price : a.price - b.price
+    );
+    setProducts(sorted);
+    setIsPriceDescending(!isPriceDescending);
+  };
+
   return (
     <>
       <header>
-        <div class="contact-info">
+        <div className="contact-info">
           <span>CONTACT - 79666 8310</span>
           <span>MAIL - care@anekcreation.com</span>
         </div>
-        <a
-          href="https://web.whatsapp.com/"
-          target="_blank"
-          class="whatsapp-float"
-        >
-          <img
-            src="https://th.bing.com/th/id/OIP.tUbodlavP44WAkBRK3knLgHaHa?w=177&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            alt="WhatsApp"
-            width="60"
-            height="60"
-          />
-        </a>
-
-        <div class="navbar">
-          <div class="logo">
-            <img class='logo_image' src="/public/images/anek logo.jpg"  alt="logo1" height="20px" width="20px" />
+        <div className="navbar">
+          <Link to="/" className="logo">
+            <img className="logo_image" src="/images/anek logo.jpg" alt="logo" />
             Anek Creations
-          </div>
-          <div class="search-bar">
+          </Link>
+          <div className="search-bar">
             <input type="text" placeholder="Search Products" />
             <button>🔍</button>
           </div>
-          <div class="icons">
+          <div className="icons">
             <span>❤ Wishlist</span>
             <span>🛒 Cart</span>
-            <span>👤 Profile</span>
+            <span>
+              <Link to="/login">👤 Profile</Link>
+            </span>
           </div>
         </div>
       </header>
 
-      <div class="container">
-        <div class="header">Crochet Art</div>
-        <div class="buttons">
-          <button>Filter</button>
-          <button>Sort By</button>
+      <div className="container">
+        <div className="header">Crochet Art</div>
+        <div className="buttons">
+          <button className="sort_by_btn" onClick={handleFilterClick}>
+            Filter by Name
+          </button>
+          <button className="sort_by_btn" onClick={handleSortByPriceClick}>
+            Sort by Price
+          </button>
         </div>
-        <div class="grid">
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/Gbxt1hp9BR2wu8i._SL360_QL95_FMwebp_.jpg"
-                alt="Blue Dreamcatcher"
-              />
-              <div class="card-content">
-                <h2>Celestial Swirl Wind Spinner</h2>
-                <p class="price">
-                  ₹160 <span class="old-price">₹300</span>
-                </p>
-                <p class="discount">46% Off</p>
+
+        <div className="grid">
+          {products.map((item, index) => (
+            <div className="card" key={index}>
+              <div className="fav-icon-wrapper">
+                <button
+                  className="fav-button"
+                  onClick={() => handleFavClick(item)}
+                  title="Add to Wishlist"
+                >
+                  ❤️
+                </button>
               </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/obxt1BWQCV4ul0a._SL360_QL95_FMwebp_.jpg"
-                alt="Dawn Pink Dreamcatcher"
-              />
-              <div class="card-content">
-                <h2>Daisy Crochet Ring</h2>
-                <p class="price">
-                  ₹99 <span class="old-price">₹150</span>
-                </p>
-                <p class="discount">34% Off</p>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/Rbxt1hocOChhfYv._SL360_QL95_FMwebp_.jpg"
-                alt="Dual Ring Car Hanging"
-              />
-              <div class="card-content">
-                <h2>Festive Vibes Crochet Earrings</h2>
-                <p class="price">
-                  ₹110 <span class="old-price">₹199</span>
-                </p>
-                <p class="discount">44% Off</p>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/Vbxt1hn9uxJLZ9t._SL360_QL95_FMwebp_.jpg"
-                alt="Evil Eye Dreamcatcher"
-              />
-              <div class="card-content">
-                <h2>Mini Rose Crochet Earrings</h2>
-                <p class="price">
-                  ₹99 <span class="old-price">₹150</span>
-                </p>
-                <p class="discount">34% Off </p>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/jbxt1RssuuUoWY3._SL360_QL95_FMwebp_.jpg"
-                alt="Evil Eye Dreamcatcher Keychain with Tassel"
-              />
-              <div class="card-content">
-                <h2>Multi-Colored Crochet Evil Eye Keychain</h2>
-                <p class="price">
-                  ₹149 <span class="old-price">₹400</span>
-                </p>
-                <p class="discount">62% Off</p>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/Sbxt1x0m57MBgxD._SL360_QL95_FMwebp_.jpg"
-                alt="Evil Eye Dreamcatcher"
-              />
-              <div class="card-content">
-                <h2>Sunflower Crochet Earrings</h2>
-                <p class="price">
-                  ₹149 <span class="old-price">₹350</span>
-                </p>
-                <p class="discount">57% Off</p>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/1bxt1xGcq637L9o._SL360_QL95_FMwebp_.jpg"
-                alt="Evil Eye Dreamcatcher"
-              />
-              <div class="card-content">
-                <h2>Trio Crochet Earrings</h2>
-                <p class="price">
-                  ₹99 <span class="old-price">₹150</span>
-                </p>
-                <p class="discount">34% Off</p>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="#">
-              {" "}
-              <img
-                src="https://m.media-amazon.com/images/X/bxt1/M/dbxt1hZOqY-fdQp._SL360_QL95_FMwebp_.jpg"
-                alt="Evil Eye Dreamcatcher"
-              />
-              <div class="card-content">
-                <h2>Watermelon Crochet Earrings</h2>
-                <p class="price">
-                  ₹70 <span class="old-price">₹120</span>
-                </p>
-                <p class="discount">41% Off</p>
-              </div>
-            </a>
-          </div>
+              <a href="#">
+                <img src={item.image} alt={item.title} />
+                <div className="card-content">
+                  <h2>{item.title}</h2>
+                  <p className="price">
+                    ₹{item.price}{" "}
+                    <span className="old-price">₹{item.oldPrice}</span>
+                  </p>
+                  <p className="discount">{item.discount}</p>
+
+                  <div className="quantity-controls">
+                    <button onClick={(e) => updateQuantity(e, index, -1)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={(e) => updateQuantity(e, index, 1)}>+</button>
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
         </div>
       </div>
 
       <footer>
-        <div class="footer-columns">
+        <div className="footer-columns">
           <div>
             <h3>Contact</h3>
             <p>Phone: 796668310</p>
@@ -202,6 +140,9 @@ const Crochet = () => {
             <p>Order Track</p>
             <p>Questions?</p>
           </div>
+        </div>
+        <div className="footer-bottom">
+          <p>&copy; 2023 Anek Creations. All rights reserved.</p>
         </div>
       </footer>
     </>

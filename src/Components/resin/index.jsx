@@ -93,7 +93,7 @@ const Resin = () => {
           <Link to='/' class="logo">
             <img
               class="logo_image"
-              src="/public/images/anek logo.jpg"
+              src="/images/anek logo.jpg"
               alt="logo1"
               height="20px"
               width="20px"
@@ -107,7 +107,9 @@ const Resin = () => {
           <div class="icons">
             <span>❤ Wishlist</span>
             <span>🛒 Cart</span>
-            <span>👤 Profile</span>
+            <span>
+<Link to='/login'>👤 Profile</Link>
+</span>
           </div>
         </div>
       </header>

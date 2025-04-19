@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 
+
+const items = [
+    {
+      img: "https://m.media-amazon.com/images/X/bxt1/M/obxt1BWQCV4ul0a._SL360_QL95_FMwebp_.jpg",
+      alt: "Earrings",
+      label: "Crochet",
+    },
+    {
+      img: "https://m.media-amazon.com/images/X/bxt1/M/Rbxt1BqRLNFMFZ7._SL360_QL95_FMwebp_.jpg",
+      alt: "Resin Frame",
+      label: "Resin Frame",
+    },
+    {
+      img: "https://m.media-amazon.com/images/X/bxt1/M/Tbxt1hqR3-nlwAd._SL360_QL95_FMwebp_.jpg",
+      alt: "Dream Catcher",
+      label: "Dream Catcher",
+    },
+  ];
+
 const Home = () => {
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const moveSlide = (direction) => {
+      let newIndex = currentIndex + direction;
+      if (newIndex < 0) newIndex = items.length - 1;
+      if (newIndex >= items.length) newIndex = 0;
+      setCurrentIndex(newIndex);
+    };
+
   return (
     <>
       <header >
@@ -21,9 +50,9 @@ const Home = () => {
           <div class="icons">
             <span>❤ Wishlist</span>
             <span>🛒 Cart</span>
-            <a href="/New folder/login page/index.html" target="_blank">
-              <span>👤 Profile</span>
-            </a>
+            <span>
+              <Link to="/login">👤 Profile</Link>
+            </span>
           </div>
         </div>
       </header>
@@ -126,46 +155,31 @@ const Home = () => {
         </section>
       </section>
 
-      <section class="best-sellers">
-        <div class="slider-container">
-          <h2>Some of Our Best Sellers</h2>
-          <div class="seller-slider">
-            <div class="seller-item">
+      <section className="best-sellers">
+      <div className="slider-container">
+        <h2>Some of Our Best Sellers</h2>
+        <div className="seller-slider">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="seller-item"
+              style={{ display: index === currentIndex ? "block" : "none" }}
+            >
               <Link to="">
-                <img
-                  src="https://m.media-amazon.com/images/X/bxt1/M/obxt1BWQCV4ul0a._SL360_QL95_FMwebp_.jpg"
-                  alt="Earrings"
-                />
+                <img src={item.img} alt={item.alt} />
               </Link>
-              <span>Crochet</span>
+              <span>{item.label}</span>
             </div>
-            <div class="seller-item">
-              <Link to="">
-                <img
-                  src="https://m.media-amazon.com/images/X/bxt1/M/Rbxt1BqRLNFMFZ7._SL360_QL95_FMwebp_.jpg"
-                  alt="Resin Frame"
-                />
-              </Link>
-              <span>Resin Frame</span>
-            </div>
-            <div class="seller-item">
-              <Link to="">
-                <img
-                  src="https://m.media-amazon.com/images/X/bxt1/M/Tbxt1hqR3-nlwAd._SL360_QL95_FMwebp_.jpg"
-                  alt="Dream Catcher"
-                />
-              </Link>
-              <span>Dream Catcher</span>
-            </div>
-          </div>
-          <button class="prev" onclick="moveSlide(-1)">
-            &#10094;
-          </button>
-          <button class="next" onclick="moveSlide(1)">
-            &#10095;
-          </button>
+          ))}
         </div>
-      </section>
+        <button className="prev" onClick={() => moveSlide(-1)}>
+          &#10094;
+        </button>
+        <button className="next" onClick={() => moveSlide(1)}>
+          &#10095;
+        </button>
+      </div>
+    </section>
 
       {/* Testimonials Section  */}
       <section class="testimonials">

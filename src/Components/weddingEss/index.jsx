@@ -60,7 +60,7 @@ const WeddingEssential = () => {
           <Link to="/" className="logo">
             <img
               className="logo_image"
-              src="/public/images/anek logo.jpg"
+              src="/images/anek logo.jpg"
               alt="Anek Creations Logo"
               height="20px"
               width="20px"
@@ -74,7 +74,9 @@ const WeddingEssential = () => {
           <div className="icons">
             <span>❤ Wishlist</span>
             <span>🛒 Cart</span>
-            <span>👤 Profile</span>
+            <span>
+<Link to='/login'>👤 Profile</Link>
+</span>
           </div>
         </div>
       </header>
