@@ -23,8 +23,8 @@ const Login = () => {
   };
   return (
     <div className="login-background">
-      <nav>
-        <Link to="#">
+      <nav className="navbar">
+        <Link to="/">
           <img
             className="logo_image_login"
             src="/images/anek logo.jpg"

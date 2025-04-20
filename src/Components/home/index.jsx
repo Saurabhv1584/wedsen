@@ -1,55 +1,64 @@
 import React, { useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-
+import item999 from "../../data/item_999.json";
+import item199 from "../../data/item_199.json";
 
 const items = [
-    {
-      img: "https://m.media-amazon.com/images/X/bxt1/M/obxt1BWQCV4ul0a._SL360_QL95_FMwebp_.jpg",
-      alt: "Earrings",
-      label: "Crochet",
-    },
-    {
-      img: "https://m.media-amazon.com/images/X/bxt1/M/Rbxt1BqRLNFMFZ7._SL360_QL95_FMwebp_.jpg",
-      alt: "Resin Frame",
-      label: "Resin Frame",
-    },
-    {
-      img: "https://m.media-amazon.com/images/X/bxt1/M/Tbxt1hqR3-nlwAd._SL360_QL95_FMwebp_.jpg",
-      alt: "Dream Catcher",
-      label: "Dream Catcher",
-    },
-  ];
+  {
+    img: "https://m.media-amazon.com/images/X/bxt1/M/obxt1BWQCV4ul0a._SL360_QL95_FMwebp_.jpg",
+    alt: "Earrings",
+    label: "Crochet",
+  },
+  {
+    img: "https://m.media-amazon.com/images/X/bxt1/M/Rbxt1BqRLNFMFZ7._SL360_QL95_FMwebp_.jpg",
+    alt: "Resin Frame",
+    label: "Resin Frame",
+  },
+  {
+    img: "https://m.media-amazon.com/images/X/bxt1/M/Tbxt1hqR3-nlwAd._SL360_QL95_FMwebp_.jpg",
+    alt: "Dream Catcher",
+    label: "Dream Catcher",
+  },
+];
 
 const Home = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const moveSlide = (direction) => {
-      let newIndex = currentIndex + direction;
-      if (newIndex < 0) newIndex = items.length - 1;
-      if (newIndex >= items.length) newIndex = 0;
-      setCurrentIndex(newIndex);
-    };
+  const moveSlide = (direction) => {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = items.length - 1;
+    if (newIndex >= items.length) newIndex = 0;
+    setCurrentIndex(newIndex);
+  };
 
   return (
     <>
-      <header >
+      <header>
         <div class="contact-info">
           <span>CONTACT - 79666 8310</span>
           <span>MAIL - care@anekcreation.com</span>
         </div>
         <div class="navbar">
-            <Link to="/">
-            <div class="logo">Anek Creations</div>
-            </Link>
+          <Link to="/" className="logo">
+            <img
+              className="logo_image"
+              src="/images/anek logo.jpg"
+              alt="logo"
+            />
+            Anek Creations
+          </Link>
           <div class="search-bar">
             <input type="text" placeholder="Search Products" />
-            <span class='search_icon'>🔍</span>
+            <span class="search_icon">🔍</span>
           </div>
           <div class="icons">
-            <span>❤ Wishlist</span>
-            <span>🛒 Cart</span>
+            <span>
+              <Link to="/favourite">❤ Wishlist</Link>
+            </span>
+            <span>
+              <Link to="/cart">🛒 Cart</Link>
+            </span>
             <span>
               <Link to="/login">👤 Profile</Link>
             </span>
@@ -101,7 +110,16 @@ const Home = () => {
           <h2>Featured Products</h2>
           <div class="food-container container">
             <div class="food-type fruite">
-              <div class="img-container">
+              <Link
+                to="/feartureProduct"
+                state={{
+                  filter: "under199",
+                  data: item199,
+                  title: "Under 199",
+                }}
+                className="img-container"
+              >
+                {" "}
                 <img
                   src="https://m.media-amazon.com/images/X/bxt1/M/cbxt1Be3cjyjNmF._SL360_QL95_FMwebp_.jpg"
                   alt="error"
@@ -115,10 +133,19 @@ const Home = () => {
                     Shop Now
                   </Link>
                 </div>
-              </div>
+              </Link>
             </div>
             <div class="food-type vegetable">
-              <div class="img-container">
+              <Link
+                to="/feartureProduct"
+                state={{
+                  filter: "under999",
+                  data: item999,
+                  title: "Under 999",
+                }}
+                className="img-container"
+              >
+                {" "}
                 <img
                   src="https://m.media-amazon.com/images/X/bxt1/M/obxt1BWQCV4ul0a._SL360_QL95_FMwebp_.jpg"
                   alt="error"
@@ -132,10 +159,10 @@ const Home = () => {
                     Shop Now
                   </Link>
                 </div>
-              </div>
+              </Link>
             </div>
             <div class="food-type grin">
-              <div class="img-container">
+              <Link to="/feartureProduct" class="img-container">
                 <img
                   src="https://m.media-amazon.com/images/X/bxt1/M/fbxt1xWa1dKQ7Zc._SL360_QL95_FMwebp_.jpg"
                   alt="error"
@@ -149,37 +176,37 @@ const Home = () => {
                     Customise Here
                   </Link>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </section>
       </section>
 
       <section className="best-sellers">
-      <div className="slider-container">
-        <h2>Some of Our Best Sellers</h2>
-        <div className="seller-slider">
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className="seller-item"
-              style={{ display: index === currentIndex ? "block" : "none" }}
-            >
-              <Link to="">
-                <img src={item.img} alt={item.alt} />
-              </Link>
-              <span>{item.label}</span>
-            </div>
-          ))}
+        <div className="slider-container">
+          <h2>Some of Our Best Sellers</h2>
+          <div className="seller-slider">
+            {items.map((item, index) => (
+              <div
+                key={index}
+                className="seller-item"
+                style={{ display: index === currentIndex ? "block" : "none" }}
+              >
+                <Link to="">
+                  <img src={item.img} alt={item.alt} />
+                </Link>
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
+          <button className="prev" onClick={() => moveSlide(-1)}>
+            &#10094;
+          </button>
+          <button className="next" onClick={() => moveSlide(1)}>
+            &#10095;
+          </button>
         </div>
-        <button className="prev" onClick={() => moveSlide(-1)}>
-          &#10094;
-        </button>
-        <button className="next" onClick={() => moveSlide(1)}>
-          &#10095;
-        </button>
-      </div>
-    </section>
+      </section>
 
       {/* Testimonials Section  */}
       <section class="testimonials">

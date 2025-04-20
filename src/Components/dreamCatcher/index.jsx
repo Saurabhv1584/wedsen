@@ -72,8 +72,12 @@ const DreamCatcher = () => {
             <button>🔍</button>
           </div>
           <div class="icons">
-            <span>❤ Wishlist</span>
-            <span>🛒 Cart</span>
+                        <span>
+              <Link to="/favourite">❤ Wishlist</Link>
+            </span>
+                        <span>
+              <Link to="/cart">🛒 Cart</Link>
+            </span>
             <span>
 <Link to='/login'>👤 Profile</Link>
 </span>

@@ -1,52 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import featureProductsData from "../../data/item_999.json";
 import "./style.css";
-import weddingEssentialsItems from "../../data/weddingEssentialsItems.json"; // import the JSON file
-import { Link } from "react-router-dom";
 
-const WeddingEssential = () => {
-  const [products, setProducts] = useState(weddingEssentialsItems);
+const FeartureProduct = () => {
   const [isPriceDescending, setIsPriceDescending] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
+  const location = useLocation();
+  const { filterType, data, title } = location.state || {};
+  const [products, setProducts] = useState([]);
 
-  const handleFilterClick = () => {
-    console.log("Filter clicked");
-    if (!isFiltered) {
-      // Filter items based on title (can be adjusted to other criteria as well)
-      const filteredProducts = weddingEssentialsItems.filter((item) =>
-        item.title.toLowerCase().includes("jewellery")
-      );
-      setProducts(filteredProducts);
+  useEffect(() => {
+    console.log('data', data)
+    console.log('filterType', filterType)
+    if (data && Array.isArray(data)) {
+      setProducts(data);
     } else {
-      setProducts(weddingEssentialsItems); // Reset to original list
+      // Fallback: Load from default JSON or show message
+      setProducts([]); 
     }
-    setIsFiltered(!isFiltered); // Toggle filter state
-  };
-
-  const handleSortByPriceClick = () => {
-    console.log("Sort By Price clicked");
-    const sortedProducts = [...products].sort((a, b) =>
-      isPriceDescending ? b.price - a.price : a.price - b.price
-    );
-    setProducts(sortedProducts);
-    setIsPriceDescending(!isPriceDescending); // Toggle for next click
-  };
-
-  const handleFavClick = (item) => {
-    console.log("Added to Wishlist", item);
-  };
+  }, []);
 
   const updateQuantity = (e, index, delta) => {
     e.preventDefault();
     setProducts((prev) =>
       prev.map((item, i) =>
         i === index
-          ? {
-              ...item,
-              quantity: Math.max(0, item.quantity + delta),
-            }
+          ? { ...item, quantity: Math.max(0, item.quantity + delta) }
           : item
       )
     );
+  };
+
+  const handleFavClick = (item) => {
+    console.log("Favorited:", item.title);
+  };
+
+  const handleFilterClick = () => {
+    if (!isFiltered) {
+      const filtered = featureProductsData.filter((item) =>
+        item.title.toLowerCase().includes("frame")
+      );
+      setProducts(filtered);
+    } else {
+      setProducts(featureProductsData);
+    }
+    setIsFiltered(!isFiltered);
+  };
+
+  const handleSortByPriceClick = () => {
+    const sorted = [...products].sort((a, b) =>
+      isPriceDescending ? b.price - a.price : a.price - b.price
+    );
+    setProducts(sorted);
+    setIsPriceDescending(!isPriceDescending);
   };
 
   return (
@@ -57,43 +64,33 @@ const WeddingEssential = () => {
           <span>MAIL - care@anekcreation.com</span>
         </div>
         <div className="navbar">
-          <Link to="/" className="logo">
+          <Link to='/' className="logo">
             <img
               className="logo_image"
               src="/images/anek logo.jpg"
-              alt="Anek Creations Logo"
+              alt="logo1"
               height="20px"
               width="20px"
             />
             Anek Creations
-          </Link>
+          </Link >
           <div className="search-bar">
             <input type="text" placeholder="Search Products" />
             <button>🔍</button>
           </div>
           <div className="icons">
-                        <span>
-              <Link to="/favourite">❤ Wishlist</Link>
-            </span>
-                        <span>
-              <Link to="/cart">🛒 Cart</Link>
-            </span>
-            <span>
-<Link to='/login'>👤 Profile</Link>
-</span>
+            <span><Link to="/favourite">❤ Wishlist</Link></span>
+            <span><Link to="/cart">🛒 Cart</Link></span>
+            <span><Link to="/login">👤 Profile</Link></span>
           </div>
         </div>
       </header>
 
       <div className="container">
-        <div className="header">Wedding Essentials</div>
+        <div className="header">{title ? title : 'Items list'}</div>
         <div className="buttons">
-          <button className="sort_by_btn" onClick={handleFilterClick}>
-            Filter by name
-          </button>
-          <button className="sort_by_btn" onClick={handleSortByPriceClick}>
-            Sort By Price
-          </button>
+          <button onClick={handleFilterClick}>Filter by Frame</button>
+          <button onClick={handleSortByPriceClick}>Sort by Price</button>
         </div>
 
         <div className="grid">
@@ -108,12 +105,13 @@ const WeddingEssential = () => {
                   ❤️
                 </button>
               </div>
-              <a href="#">
+              <Link to={`/product/${index}`}>
                 <img src={item.image} alt={item.title} />
                 <div className="card-content">
                   <h2>{item.title}</h2>
                   <p className="price">
-                    ₹{item.price} <span className="old-price">₹{item.oldPrice}</span>
+                    ₹{item.price}{" "}
+                    <span className="old-price">₹{item.oldPrice}</span>
                   </p>
                   <p className="discount">{item.discount}</p>
 
@@ -123,7 +121,7 @@ const WeddingEssential = () => {
                     <button onClick={(e) => updateQuantity(e, index, 1)}>+</button>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
           ))}
         </div>
@@ -164,4 +162,4 @@ const WeddingEssential = () => {
   );
 };
 
-export default WeddingEssential;
+export default FeartureProduct;
